@@ -1,2 +1,6 @@
 # T-cell-differentiation-and-dysfunction
-Code used to simulate and compare models of T cell differentiation and dysfunction during ex vivo expansion
+Julia code used to simulate and compare models of T cell differentiation and dysfunction during ex vivo expansion
+
+All code used to generate figures in "Investigating _ex vivo_ differentiation and dysfunction pathways of healthy and patient T cells", Lacy _et al._, is in the main script. Other required functions are in the functions file. 
+
+Run the first section of the main script to download the required packages, and then run the next section (line 19) to load in these packages and initialise/define all required variables. The next section (line 127) contains all code used to simulate and fit all models to the healthy and patient cell data sets, and data describing the fitted parameters and model loss is saved to the current directory This computation may take a significant amount of time on a typical computer (which can be reduced for testing by restricting which models are fitted, see _accept_model_), so this data is provided alongside the code. The next section (line 578) contains the code used to analyse the fitting data and plot all of the figures in the main text except for Figs 2 and 3, which are in the section after (line 1,113). The final sections contain code to generate the supplementary figures (line 1,312) and videos (line 1,709). All figures and videos are saved to the file "figs_and_videos".
