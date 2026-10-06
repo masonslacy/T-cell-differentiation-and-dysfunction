@@ -118,6 +118,8 @@ col_exh = RGB(89/255, 68/255, 19/255); # brown for exhausted cells
 alpha_val = 0.25; # alpha value (opacity) for displaying data standard deviations
 data_names = ["Healthy", "Patient"]; # names of datasets for plotting
 
+set_theme!(fonts = (; regular = "Times New Roman", bold = "Times New Roman Bold")); # set fonts
+
 
 
 
@@ -717,8 +719,8 @@ colours = ifelse.(inbounds_h[err_order_h], :blue, :red); # define colours to dif
 plt = CairoMakie.Figure(fontsize=28); 
 ax = CairoMakie.Axis(plt[1, 1], xlabel="Models ordered by increasing healthy loss", ylabel="Normalised healthy model loss");
 CairoMakie.barplot!(eachindex(err_order_h), model_err_h[err_order_h], color=colours)
-CairoMakie.barplot!([0],[0], color=:blue, label="In bounds") # dummy plots for making the legend
-CairoMakie.barplot!([0],[0], color=:red, label="Out of bounds")
+CairoMakie.barplot!([0],[0], color=:blue, label="Within one std dev") 
+CairoMakie.barplot!([0],[0], color=:red, label="Outside one std dev")
 CairoMakie.axislegend(position = :lt)
 display(plt)
 save("figs_and_videos\\Fig_2a_left.png", plt)
@@ -728,8 +730,8 @@ colours = ifelse.(inbounds_p[err_order_p], :blue, :red); # define colours to dif
 plt = CairoMakie.Figure(fontsize=28); 
 ax = CairoMakie.Axis(plt[1, 1], xlabel="Models ordered by increasing patient loss", ylabel="Normalised patient model loss");
 CairoMakie.barplot!(eachindex(err_order_p), model_err_p[err_order_p], color=colours)
-CairoMakie.barplot!([0],[0], color=:blue, label="In bounds") # dummy plots for making the legend
-CairoMakie.barplot!([0],[0], color=:red, label="Out of bounds")
+CairoMakie.barplot!([0],[0], color=:blue, label="Within one std dev") 
+CairoMakie.barplot!([0],[0], color=:red, label="Outside one std dev")
 display(plt)
 save("figs_and_videos\\Fig_2a_right.png", plt)
 
@@ -771,9 +773,9 @@ plt = CairoMakie.Figure(fontsize=28);
 ax = CairoMakie.Axis(plt[1, 1], xlabel="Models ordered by increasing average loss", ylabel="Average normalised model loss", limits=(-400,num_models+400,-0.1,maximum(model_err_avg)+0.2));
 CairoMakie.barplot!(eachindex(err_order_avg), model_err_avg[err_order_avg], color=colours)
 CairoMakie.vlines!(top_model_num, linestyle=:dash, color=:black, linewidth=3)
-CairoMakie.barplot!([0],[0], color=:blue, label="In bounds") # dummy plots for making the legend
-CairoMakie.barplot!([0],[0], color=:red, label="Out of bounds")
-CairoMakie.scatter!([findfirst(x->x==i, err_order_avg) for i in case_study_inds], model_err_avg[case_study_inds].+0.15, color=case_study_colours, marker=case_study_markers, markersize=case_study_markersize, strokecolor=:black, strokewidth=1.5)
+CairoMakie.barplot!([0],[0], color=:blue, label="Within one std dev") # dummy plots for making the legend
+CairoMakie.barplot!([0],[0], color=:red, label="Outside one std dev")
+#CairoMakie.scatter!([findfirst(x->x==i, err_order_avg) for i in case_study_inds], model_err_avg[case_study_inds].+0.15, color=case_study_colours, marker=case_study_markers, markersize=case_study_markersize, strokecolor=:black, strokewidth=1.5)
 CairoMakie.axislegend(position = :lt)
 display(plt)
 save("figs_and_videos\\Fig_5a.png", plt)
@@ -1765,7 +1767,6 @@ state_graph = CairoMakie.Figure(fontsize=25/scale_down, size=(600,350)./scale_do
 ax = CairoMakie.Axis(state_graph[1, 1], limits=(minimum(cell_pos[:,1])-0.25,maximum(cell_pos[:,1])+0.26,minimum(cell_pos[:,2])-0.26,maximum(cell_pos[:,2])+0.4), aspect=DataAspect()); # define axis with title
 hidespines!(ax); # remove axis grid and other background elements
 hidedecorations!(ax);
-set_theme!(fonts = (; regular = "Times New Roman", bold = "Times New Roman Bold")); # set fonts
 
 # create cells in figure
 CairoMakie.scatter!(cell_pos[:,1], cell_pos[:,2]; markersize=100/scale_down, color=[col_nai,col_mem,col_eff,col_exh], strokecolor=:black, strokewidth=3/scale_down); # draw cells 
