@@ -124,8 +124,6 @@ set_theme!(fonts = (; regular = "Times New Roman", bold = "Times New Roman Bold"
 
 
 
-
-
 ## code to fit models to data 
 
 # choices for model fitting
