@@ -1607,8 +1607,8 @@ plt = CairoMakie.Figure(fontsize=28);
 ax = CairoMakie.Axis(plt[1, 1], xlabel="Models ordered by increasing average loss", ylabel="Average normalised model loss");
 CairoMakie.barplot!(eachindex(err_order_avg), model_err_avg[err_order_avg], color=colours)
 CairoMakie.vlines!(num_models-worst_model_num+1, linestyle=:dash, color=:black, linewidth=3)
-CairoMakie.barplot!([0],[0], color=:blue, label="In bounds") # dummy plots for making the legend
-CairoMakie.barplot!([0],[0], color=:red, label="Out of bounds")
+CairoMakie.barplot!([0],[0], color=:blue, label="Within one std dev") # dummy plots for making the legend
+CairoMakie.barplot!([0],[0], color=:red, label="Outside one std dev")
 CairoMakie.axislegend(position = :lt)
 display(plt)
 save("figs_and_videos\\Fig_S5a.png", plt)
