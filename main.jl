@@ -901,15 +901,15 @@ save("figs_and_videos\\Fig_5b.png", plt)
 
 
 
-lit_support = [2 8 7 3 17; 14 2 12 6 5; 1 2 5 26 0; 2 0 7 9 20; 3 5 6 0 0; 4 2 3 2 5; 6 9 1 7 2;
-               8 2 1 9 0; 1 6 1 10 1; 10 4 2 6 0; 
-               3 4 2 7 13; 4 3 1 14 3; 10 3 2 7 2; 7 13 2 0 0; 7 1 2 2 0]; # number of articles from Table 1 in main text, [feature (in order), likely/implicitly likely/neutral/implicitly unlikely/unlikely]
+lit_support = [3 7 7 3 16; 13 4 12 6 5; 0 3 6 25 0; 2 0 7 9 20; 3 8 6 1 0; 4 2 3 2 2; 5 8 3 7 2;
+               8 2 1 9 0; 3 3 3 10 0; 9 4 3 6 0; 
+               3 3 4 10 9; 3 5 1 14 2; 10 5 2 6 2; 6 14 1 0 0; 5 4 1 3 0]; # number of articles from Table 2 in main text, [feature (in order), likely/implicitly likely/neutral/implicitly unlikely/unlikely]
 
 lit_support_ratio = zeros(num_choices+1); # ratio between -1 (against) and 1 (for) for each feature selection including 1a off,  calculated as (1*likely + 0.5*implicitly likely + 0*neutral - 0.5*implicitly unlikely - 1*unlikely)/(likely + implicitly likely + neutral + implicitly unlikely + unlikely)
 lit_support_ratio[2:end] = lit_support*[1;0.5;0;-0.5;-1]./sum(lit_support,dims=2)[:]; # add in features 1a on onwards
 lit_support_ratio[1] = -lit_support_ratio[2]; # likeliness for 1a off
 
-# Fig 5c: Yule's Q for individual features compared with the weighted average of values from Table 1
+# Fig 5c: Yule's Q for individual features compared with the weighted average of values from Table 2
 plt = CairoMakie.Figure(fontsize=26.5, size=(600,400)); ax = CairoMakie.Axis(plt[1, 1], xticks = (1:16, choice_names_plot), xticklabelrotation=pi/2, xlabel="Model feature selection", ylabel="Yule's Q / Weighted average", limits=(0,17,-1.1,1.1));
 plot_cols = [(:gray,0.9), (col_nai,0.75)]; # colours for barplot
 CairoMakie.barplot!([i for i in 1:num_choices+1 for j in 1:2], [lit_support_ratio Q_avg[1:length(choice_names_plot)+1:length(choice_names_plot)^2]]'[:], color=plot_cols[[j for i in 1:num_choices+1 for j in 1:2]])
@@ -1112,7 +1112,7 @@ CairoMakie.colgap!(plt.layout, 10)
 display(plt)
 save("figs_and_videos\\Fig_6a.png", plt)
 
-# Fig 6b: Yule's Q for individual feature selections in the best models that do not contain bidirectional differentiation compared to the weighted average of values in Table 1
+# Fig 6b: Yule's Q for individual feature selections in the best models that do not contain bidirectional differentiation compared to the weighted average of values in Table 2
 plt = CairoMakie.Figure(fontsize=25, size=(600,400)); ax = CairoMakie.Axis(plt[1, 1], xticks = (1:length(choice_names_assump), choice_names_assump), xticklabelrotation=pi/2, xlabel="Model feature selection", ylabel="Yule's Q / Weighted average", limits=(0,16,-1.1,1.1));
 plot_cols = [(:gray,0.9), (col_nai,0.75)]; # colours for barplot
 CairoMakie.barplot!([i for i in 1:length(choice_names_assump) for j in 1:2], [lit_support_ratio[[1:3;5:end]] Q_assump[1:length(choice_names_assump)+1:length(choice_names_assump)^2]]'[:], color=plot_cols[[j for i in 1:length(choice_names_assump) for j in 1:2]])
@@ -1135,7 +1135,7 @@ fig_name = "Fig_3";
 if fig_name == "Fig_3"
     # define model feature selections to test from literature, with first being the base pathway and second being an altered pathway.  Feature selections are  [1a, 1b, 1c, 1d, 1e, 1f, 1g,  2a, 2b, 2c,  3a, 3b, 3c, 3d, 3e]
     # for Fig 3:
-    model_tests = [[true, false, false, false, false, false, true,  false, false, true,  false, false, false, false, true],   [false, false, true, false, false, false, true,  false, false, true,  false, false, false, false, true]]; # base model from "T cell exhaustion", Wherry (2011),  and altered pathway is by switching bidirectional differentiation on
+    model_tests = [[true, false, false, false, true, false, true,  false, false, true,  false, false, false, false, true],   [false, false, true, false, true, false, true,  false, false, true,  false, false, false, false, true]]; # base model from "T cell exhaustion", Wherry (2011),  and altered pathway is by switching bidirectional differentiation on
     solid_name = "1c off"; dash_name = "1c on"; # names for solid (base) and dashed (altered) models in legend
 elseif fig_name == "Fig_4"
     # for Fig 4:
